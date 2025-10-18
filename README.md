@@ -1,5 +1,3 @@
 # Breakable bones patch 6
-Why this isn't finished:
-- Some or all settings don't work, like mod toggle or damage on break
-- the mod doesnt auto install the breaking sound
-- uhh other stuff honestly i just typed stuff until there was no errors ion know how ts works
+yeah
+for those more intellegient than me can you look at the JointHandler Update() code and lmk how hard it would be to add per-limb damage instead of just killing the guy, thx x
