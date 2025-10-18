@@ -10,6 +10,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using Il2CppSLZ.Marrow;
 using Il2CppSLZ.Marrow.Data;
+using Il2CppSLZ.Marrow.AI;
 
 
 namespace BreakableBonesPatch6
@@ -33,6 +34,12 @@ namespace BreakableBonesPatch6
         // Token: 0x06000003 RID: 3 RVA: 0x00002148 File Offset: 0x00000348
         private void Update()
         {
+            
+            if (!Core.toggled.Value)
+            {
+                return;
+            }
+
             foreach (Muscle muscle in this.muscles)
             {
                 bool flag = muscle._maxForce == 0f;
@@ -46,6 +53,7 @@ namespace BreakableBonesPatch6
                 bool flag2 = magnitude > Core.breakTorque.Value || magnitude2 > Core.breakForce.Value;
                 if (flag2)
                 {
+                    
                     joint.angularXMotion = (ConfigurableJointMotion)(Core.x ? 2 : 1);
                     joint.angularYMotion = (ConfigurableJointMotion)(Core.y ? 2 : 1);
                     joint.angularZMotion = (ConfigurableJointMotion)(Core.z ? 2 : 1);
@@ -56,10 +64,12 @@ namespace BreakableBonesPatch6
                     audioSource.PlayOneShot(audioClip, Random.Range(0.8f, 1.3f));
                     this.oldForce = muscle._maxForce;
                     muscle._maxForce = 0f;
-                    bool value = Core.takedamage.Value;
-                    if (value)
+                    //kill
+                    if (Core.kill.Value)
                     {
-                        pMaster.transform.root.GetComponentInChildren<BehaviourBaseNav>().health.cur_hp -= 25f;
+                        pMaster.Kill();
+
+
                     }
                 }
             }
